@@ -111,8 +111,6 @@ st.set_page_config(
     page_title="Stock Analysis",
     page_icon=":chart:",
     layout="wide",
-    
-
 )
 
 st.title("Stock Analysis")
@@ -126,60 +124,66 @@ button = st.button('Go')
 
 # Retrieve and display stock data
 if button:
-    today_open, today_high, today_low, today_volume, market_cap, pe_ratio, div_yield, news, fig ,cagr,sector,sentiment_scores,industry,officers,de,em,bar,w,emp,ab,c= get_stock_data(ticker_input)
-    
-    st.subheader("Graph")
-    st.plotly_chart(fig)
-    with st.expander("About"):
+     # Check if the start date is greater than or equal to the end date
+    if start_date >= end_date:
+        st.error("Error: Start date must be earlier than the end date.")
+    else:
+        today_open, today_high, today_low, today_volume, market_cap, pe_ratio, div_yield, news, fig ,cagr,sector,sentiment_scores,industry,officers,de,em,bar,w,emp,ab,c= get_stock_data(ticker_input)
+    if start_date == end_date:
+            st.error("Error: Start date and end date for the graph cannot be the same.")
+    else:        
+        st.subheader("Graph")
+        st.plotly_chart(fig)
+        with st.expander("About"):
         
-        st.write("Ticker:", ticker_input)
-        st.write("Sector:",sector)
-        st.write("Industry:",industry)
-        st.write("Country:",c)
-        st.write("Website:",w)
-        st.write("Full time Employees:",emp)
-        st.subheader("summary")
-        st.write(ab)
-    st.write("--------------------------")
-    st.subheader("Today's Financial Data")
-    st.write("Today's Open:", today_open)
-    st.write("Today's High:", today_high)
-    st.write("Today's Low:", today_low)
-    st.write("Today's Volume:", today_volume)
-    st.write("--------------------------")
-    st.subheader("Total Analysis")
-    st.write("Market Cap:", market_cap)
-    st.write("P/E Ratio:", pe_ratio)
-    st.write("Dividend Yield:", div_yield)
-    st.write("One Year CAGR:",cagr)
-    st.write("Debt To Equity Ratio:",de)
-    st.write("Ebidta Margin:",em)
-    st.write("--------------------------")
-    st.subheader("Sentiment Analysis")
-    st.write("Sentiment Scores for", ticker_input + ":")
-    for key, value in sentiment_scores.items():
-        st.write(key + ":", value)
+            st.write("Ticker:", ticker_input)
+            st.write("Sector:",sector)
+            st.write("Industry:",industry)
+            st.write("Country:",c)
+            st.write("Website:",w)
+            st.write("Full time Employees:",emp)
+            st.subheader("summary")
+            st.write(ab)
+        st.write("--------------------------")
+        st.subheader("Today's Financial Data")
+        st.write("Today's Open:", today_open)
+        st.write("Today's High:", today_high)
+        st.write("Today's Low:", today_low)
+        st.write("Today's Volume:", today_volume)
+        st.write("--------------------------")
+        st.subheader("Total Analysis")
+        st.write("Market Cap:", market_cap)
+        st.write("P/E Ratio:", pe_ratio)
+        st.write("Dividend Yield:", div_yield)
+        st.write("One Year CAGR:",cagr)
+        st.write("Debt To Equity Ratio:",de)
+        st.write("Ebidta Margin:",em)
+        st.write("--------------------------")
+        st.subheader("Sentiment Analysis")
+        st.write("Sentiment Scores for", ticker_input + ":")
+        for key, value in sentiment_scores.items():
+            st.write(key + ":", value)
    
     # To create tabs
-    actions,newss,officerss,holder = st.tabs(["Actions"," RecentNews"," TopEmployees"," Holders"])
+        actions,newss,officerss,holder = st.tabs(["Actions"," RecentNews"," TopEmployees"," Holders"])
 
     # Perform operation on tabs
-    with actions:
-        st.subheader("Actions")
-        st.write("", msft.actions)
+        with actions:
+            st.subheader("Actions")
+            st.write("", msft.actions)
 
-    with newss:
-        st.subheader("Recent News")
-        for article in news:
-            st.write("Headline:", article.get('title'))
-            st.write("Publisher:", article.get('publisher'))
-            st.write("URL:", article.get('link'))
-            st.write("---")
+        with newss:
+            st.subheader("Recent News")
+            for article in news:
+                st.write("Headline:", article.get('title'))
+                st.write("Publisher:", article.get('publisher'))
+                st.write("URL:", article.get('link'))
+                st.write("---")
     
-    with officerss:
-        st.subheader("Top employees")
-        st.write(officers)
+        with officerss:
+            st.subheader("Top employees")
+            st.write(officers)
     
-    with holder:
-        st.subheader("MAJOR HOLDERS")
-        st.write(bar)
+        with holder:
+            st.subheader("MAJOR HOLDERS")
+            st.write(bar)
