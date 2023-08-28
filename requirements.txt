@@ -1,0 +1,6 @@
+pandas==1.5.2
+plotly==5.15.0
+streamlit==1.23.1
+vaderSentiment==3.3.2
+vaderSentiment==3.3.2
+yfinance==0.2.28
