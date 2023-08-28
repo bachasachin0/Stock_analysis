@@ -111,11 +111,7 @@ st.set_page_config(
     page_title="Stock Analysis",
     page_icon=":chart:",
     layout="wide",
-    [theme]
-    base="light"
-    primaryColor="#ff5353"
-    secondaryBackgroundColor="#dfe6f3"
-    textColor="#16171c"
+    
 
 )
 
